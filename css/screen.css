@@ -36,7 +36,6 @@ body {
 
 .item, .info {
     position: absolute;
-    overflow: hidden;
 }
 
 .edit .item {
@@ -47,23 +46,25 @@ body {
     
 }
 
-.item .image {
+.item .photo {
     height: 50%;
     float: left;
+    overflow: hidden;
 }
 
-.item.door .image {
+.item.door .photo {
     width: 100%;
 }
 
 
-.item.square .image {
+.item.square .photo {
     width: 50%;
 }
 
-.edit .item .image {
+.edit .item .photo {
     background-color: blue;
 }
+
 
 /* Retina-specific stuff here */
 @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi){ 

@@ -3,7 +3,7 @@ var reload_timer;
 var animation_timer;
 var feed = new Instafeed({
     get: 'tagged',
-    tagName: 'kult2014',
+    tagName: 'kulturspektakel',
     clientId: 'f277c99d618f4baf863906716c305c83',
     resolution: 'standard_resolution',
     useHttp: true,
@@ -53,6 +53,7 @@ function triggerAnimation() {
     
     
     
+    
 }
 
 function loadImages(data) {
@@ -69,7 +70,9 @@ function getBase64FromImage(obj) {
         } else {
             //load iamge
             var img = new Image();
-            img.src = obj.images.standard_resolution.url;
+            img.crossOrigin = "anonymous";
+            //img.src = obj.images.standard_resolution.url;
+            img.src = "http://www.corsproxy.com/"+obj.images.standard_resolution.url.replace(/.*?:\/\//g, "");
             
             img.onload = function () {
                 var canvas = document.createElement("canvas");
@@ -95,21 +98,26 @@ function getBase64FromImage(obj) {
 
 function addImage(obj) {
     
-    $(".item").append('<canvas class="image" id="'+obj.id+'"></canvas>');
-    
+    tile = $($(".photo")[Math.floor(Math.random() * 10)]);
+    size = Math.max(tile.width(), tile.height());
+    tile.html('<canvas width="'+size+'" height="'+size+'"  id="'+obj.id+'"></canvas>');
     var canvas = document.getElementById(obj.id);
     var ctx = canvas.getContext("2d");
     
     var image = new Image();
     image.src = "data:image/png;base64,"+obj.images.standard_resolution.data;
     image.onload = function() {
-        console.log(obj);
-        ctx.drawImage(image, 0, 0, canvas.width, image.height * (canvas.width/image.width));
+        ctx.drawImage(image, 0, 0, canvas.height, canvas.height);
         ctx.font = "12px sans-serif";
         ctx.fillStyle = 'white';
-        ctx.fillText("@"+obj.user.username, 10, 15);
+        ctx.fillText("@"+obj.user.username, 5, 15);
         //obj.likes.count
     };
-    
-    
+}
+
+function clearCache() {
+    server.images.clear()
+    .done(function() {
+        console.log("cache cleared");
+    })
 }
