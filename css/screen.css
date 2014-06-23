@@ -34,7 +34,7 @@ body {
     left: 750px;
 }
 
-.item {
+.item, .info {
     position: absolute;
     overflow: hidden;
 }
@@ -45,6 +45,24 @@ body {
 
 .door-inner {
     
+}
+
+.item .image {
+    height: 50%;
+    float: left;
+}
+
+.item.door .image {
+    width: 100%;
+}
+
+
+.item.square .image {
+    width: 50%;
+}
+
+.edit .item .image {
+    background-color: blue;
 }
 
 /* Retina-specific stuff here */

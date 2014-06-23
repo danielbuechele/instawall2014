@@ -37,6 +37,8 @@ $(function(){
     	triggerAnimation();
     }, 30000);
 	
+	feed.run();
+	
 	reload_timer = setInterval(function () {
     	console.log("reload from instagram");
     	feed.run();
@@ -63,6 +65,7 @@ function getBase64FromImage(obj) {
     server.get('images',obj.id).done( function ( results ) {
         if(typeof results != 'undefined') {
             console.log("image from cache");
+            addImage(results);
         } else {
             //load iamge
             var img = new Image();
@@ -88,4 +91,25 @@ function getBase64FromImage(obj) {
             }
         }
     });
+}
+
+function addImage(obj) {
+    
+    $(".item").append('<canvas class="image" id="'+obj.id+'"></canvas>');
+    
+    var canvas = document.getElementById(obj.id);
+    var ctx = canvas.getContext("2d");
+    
+    var image = new Image();
+    image.src = "data:image/png;base64,"+obj.images.standard_resolution.data;
+    image.onload = function() {
+        console.log(obj);
+        ctx.drawImage(image, 0, 0, canvas.width, image.height * (canvas.width/image.width));
+        ctx.font = "12px sans-serif";
+        ctx.fillStyle = 'white';
+        ctx.fillText("@"+obj.user.username, 10, 15);
+        //obj.likes.count
+    };
+    
+    
 }
