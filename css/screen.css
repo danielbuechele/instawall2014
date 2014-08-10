@@ -50,6 +50,7 @@ body {
     height: 50%;
     float: left;
     overflow: hidden;
+    position: relative;
 }
 
 .item.door .photo {
@@ -63,6 +64,12 @@ body {
 
 .edit .item .photo {
     background-color: blue;
+}
+
+.photo canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 
